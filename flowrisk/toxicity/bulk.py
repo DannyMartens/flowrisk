@@ -276,12 +276,14 @@ class RecursiveBulkClassMABuckets(Buckets):
         assert self.latest_price is not None, \
             'RecursiveBulkClassMABuckets has not been initialized. ' \
             'The latest price is None.'
-
-        buy_volume_pct = norm.cdf(
-            (price - self.latest_price)
-            /
-            pnl_volatility_estimate
-        )
+        if pnl_volatility_estimate == 0:
+            buy_volume_pct = 0
+        else:
+            buy_volume_pct = norm.cdf(
+                (price - self.latest_price)
+                /
+                pnl_volatility_estimate
+            )
 
         time_bar_remaining_volume = volume
         while time_bar_remaining_volume > 0:
@@ -496,11 +498,14 @@ class RecursiveBulkClassEWMABuckets(Buckets):
             'RecursiveBulkClassMABuckets has not been initialized. ' \
             'The latest price is None.'
 
-        buy_volume_pct = norm.cdf(
-            (price - self.latest_price)
-            /
-            pnl_volatility_estimate
-        )
+        if pnl_volatility_estimate == 0:
+            buy_volume_pct = 0
+        else:
+            buy_volume_pct = norm.cdf(
+                (price - self.latest_price)
+                /
+                pnl_volatility_estimate
+            )
 
         time_bar_remaining_volume = volume
         while time_bar_remaining_volume > 0:
